@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #3874c0; -webkit-text-stroke: #3874c0; background-color: #121313}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #3874c0; -webkit-text-stroke: #3874c0; background-color: #121313; min-height: 16.0px}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1">&lt;!DOCTYPE html&gt;</span></p>
+<p class="p1"><span class="s1">&lt;html lang="en" class="scroll-smooth"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;head&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;title&gt;EcoSort AI&lt;/title&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"&gt;&lt;/script&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet"&gt;&lt;/script&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;link rel="preconnect" href="https://fonts.gstatic.com" crossorigin&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- Chosen Palette: Warm Neutrals --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- Application Structure Plan: The application is structured as a simple, single-purpose tool with a clear user flow. The layout is centered, with a dedicated area for image upload, an image preview, and a results section. The core interaction involves a file input to select an image and a button to initiate the classification. This design is highly intuitive and mirrors a task-oriented approach, making the complex process of machine learning feel simple and accessible to the user. --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- Visualization &amp; Content Choices: The primary visualization is the image itself, which is central to the user's task. The core data is presented as a text prediction. A simple loading indicator (text) provides user feedback during processing. This approach focuses on function and clarity, avoiding unnecessary visualizations and ensuring the user's goal is met with minimal distraction. CONFIRMATION: NO SVG/Mermaid used. --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;style&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>body {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>font-family: 'Inter', sans-serif;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>background-color: #FDFBF8;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>color: #4A4A4A;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.container {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>max-width: 500px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.image-preview {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>max-width: 100%;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>max-height: 400px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>object-fit: contain;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>border-radius: 0.75rem;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/head&gt;</span></p>
+<p class="p1"><span class="s1">&lt;body class="antialiased flex items-center justify-center min-h-screen p-4"&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="container mx-auto p-8 rounded-xl shadow-xl bg-white text-center"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;h1 class="text-3xl md:text-4xl font-bold mb-4"&gt;EcoSort AI&lt;/h1&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;p class="text-gray-600 mb-6"&gt;Classify recyclable materials with AI.&lt;/p&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="mb-6"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;input type="file" id="image-upload" accept="image/*" class="hidden"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;label for="image-upload" class="cursor-pointer inline-block py-3 px-6 bg-green-500 hover:bg-green-600 transition text-white font-semibold rounded-full shadow-lg"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>Upload Image</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/label&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div id="image-container" class="mb-6 hidden"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;img id="image-preview" src="#" alt="Image Preview" class="image-preview mx-auto"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;button id="classify-btn" class="hidden py-3 px-6 bg-gray-800 hover:bg-gray-700 transition text-white font-semibold rounded-full shadow-lg"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>Classify</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/button&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div id="loading" class="mt-6 hidden text-gray-500 font-semibold"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>Analyzing...</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div id="result" class="mt-6 hidden"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;h2 class="text-2xl font-bold mb-2"&gt;Result:&lt;/h2&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;p id="prediction-text" class="text-xl font-semibold text-green-700"&gt;&lt;/p&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const imageUpload = document.getElementById('image-upload');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const imageContainer = document.getElementById('image-container');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const imagePreview = document.getElementById('image-preview');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const classifyBtn = document.getElementById('classify-btn');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const loadingText = document.getElementById('loading');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const resultDiv = document.getElementById('result');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const predictionText = document.getElementById('prediction-text');</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>let model;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const loadModel = async () =&gt; {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>model = await mobilenet.load();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>};</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const classifyImage = async () =&gt; {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>resultDiv.classList.add('hidden');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>loadingText.classList.remove('hidden');</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const predictions = await model.classify(imagePreview);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>loadingText.classList.add('hidden');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>resultDiv.classList.remove('hidden');</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const prediction = predictions[0];</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const className = prediction.className;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>let displayMessage = `This is likely: ${className}`;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const commonRecyclableClasses = {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>'plastic_bottle': 'Plastic Bottle ♻️',</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>'water_bottle': 'Plastic Water Bottle ♻️',</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>'carton': 'Cardboard Box ♻️',</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>'paper_towel': 'Paper Waste ♻️',</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>'cup': 'Cup 🗑️',</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>'wine_bottle': 'Glass Bottle ♻️',</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>'soda_bottle': 'Plastic Bottle ♻️',</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>'garbage_can': 'Garbage Can 🗑️',</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>'can_opener': 'Metal Can ♻️',</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>'pop_bottle': 'Plastic Bottle ♻️',</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>};</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>if (commonRecyclableClasses[className.toLowerCase()]) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>displayMessage = `This is a recognized recyclable item: ${commonRecyclableClasses[className.toLowerCase()]}`;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>predictionText.textContent = displayMessage;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>};</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>imageUpload.addEventListener('change', (event) =&gt; {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const file = event.target.files[0];</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>if (file) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>const reader = new FileReader();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>reader.onload = (e) =&gt; {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>imagePreview.src = e.target.result;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>imageContainer.classList.remove('hidden');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>classifyBtn.classList.remove('hidden');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>resultDiv.classList.add('hidden');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>loadingText.classList.add('hidden');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>};</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>reader.readAsDataURL(file);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>});</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>classifyBtn.addEventListener('click', classifyImage);</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>window.onload = loadModel;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/body&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/html&gt;</span></p>
+</body>
+</html>
